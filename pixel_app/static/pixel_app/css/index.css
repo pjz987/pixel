@@ -21,3 +21,12 @@ canvas {
 #canvas-and-aside {
     display: flex;
 }
+
+.colors {
+    display: flex;
+}
+
+.color {
+    height: 100px;
+    width: 100px;
+}

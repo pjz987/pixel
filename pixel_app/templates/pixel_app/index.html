@@ -2,21 +2,41 @@
 <head>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'pixel_app/css/style.css' %}">
-    <script type="text/javascript" src="{% static 'pixel_app/js/script.js' %}" defer></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'pixel_app/css/index.css' %}">
+    <script type="text/javascript" src="{% static 'pixel_app/js/index.js' %}" defer></script>
 </head>
 <main id="app">
     <div id="color-input">
         <input v-model="color">
-        <button @click="colorCanvas">Color</button>
-        <button @click="saveColor">Save</button>
+        <button @click="colorCanvas">Add</button>
+        <button v-if="color.length" @click="colorPattern">Mix</button>
     </div>
     <div id="canvas-and-aside">
         <canvas width="500" height="500"></canvas>
         <div id="saved-colors">
-            <color-div v-for="color in colors" :key="color.id" :color="color">
 
-            </color-div>
+            <form action="{% url 'pixel_app:save_palette' %}" method="POST">
+                {% csrf_token %}
+                <button v-if="colors.length" @click="saveColor" type="submit">Save</button>
+                <color-div v-for="color in colors" :key="color.id" :color="color">
+                </color-div>
+                <input name="colors" type="hidden" v-model="colors">
+            </form>
+
         </div>
+    </div>
+    <div id="palettes">
+        <form action="choose-palette" method="POST">
+        {% for palette in palettes %}
+            <div class="palette">
+            <a href="{% url 'pixel_app:choose_palette' id=palette.id %}">{{ palette }}</a>
+                <div class="colors">
+                {% for color in palette.color_set.all %}
+                    <div class="color" style="background:{{color}}"></div>
+                {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        </form>
     </div>
 </main>

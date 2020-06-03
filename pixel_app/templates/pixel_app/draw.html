@@ -1,0 +1,16 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'pixel_app/css/draw.css' %}">
+    <script type="text/javascript" src="{% static 'pixel_app/js/draw.js' %}" defer></script>
+</head>
+{{ colors|json_script:"colors" }}
+<main id="app">
+    <div id="canvas-and-aside">
+        <canvas width="500" height="500"></canvas>
+        <div id="palette">
+            {% for color in }
+        </div>
+    </div>
+</main>

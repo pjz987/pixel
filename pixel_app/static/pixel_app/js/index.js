@@ -9,6 +9,8 @@ var colorDiv = {
         {{ color }}
         </span>
         <div class="swatch" :id="color.id" :background="color" :style="styling">
+        <input :name="color.id" :value="color">
+        </input>
         </div>
     </div>`,
     computed: {
@@ -35,13 +37,15 @@ var app = new Vue({
 
     methods: {
         colorCanvas: function() {
-            this.ctx.fillStyle = this.color;
-            this.ctx.fillRect(0, 0, w, h);
+            // this.ctx.fillStyle = this.color;
+            // this.ctx.fillRect(0, 0, w, h);
+            if (this.colors.includes(this.color) == false) {
+                this.colors.push(this.color);
+                this.colorPattern();
+            };
         },
 
         saveColor: function() {
-            this.colors.push(this.color);
-            this.colorPattern();
         },
 
         colorPattern: function() {
