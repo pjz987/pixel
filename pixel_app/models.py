@@ -1,5 +1,8 @@
 from django.db import models
 
+from PIL import Image, ImageDraw
+import json
+
 class Palette(models.Model):
     name = models.CharField(max_length=100)
 
@@ -16,3 +19,24 @@ class Color(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Art(models.Model):
+    name = models.CharField(max_length=200, default="Untitled")
+    json_str = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def show(self):
+        pixels = json.loads(self.json_str)['pixels']
+        w = 500
+        h = 500
+        img = Image.new('RGB', (w, h))
+        draw = ImageDraw.Draw(img)
+
+        for pixel in pixels:
+            draw.rectangle(((pixel['x'], pixel['y']), (pixel['x'] + 50, pixel['y'] + 50)), fill=pixel['color'])
+        
+        img.show()
+

@@ -1,8 +1,10 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Color, Palette
+from .models import Color, Palette, Art
+
+import json
 
 def index(request):
     palettes = Palette.objects.all()
@@ -26,4 +28,15 @@ def save_palette(request):
 
 def choose_palette(request, id):
     palette = Palette.objects.get(id=id)
-    return HttpResponse(palette)
+    print(json.dumps(palette.colors()))
+    return render(request, 'pixel_app/draw.html', {'pallete': palette, 'colors': palette.colors()})
+
+def save_pic(request):
+    pixels_string = request.POST['pixels-string']
+    pixels_list = json.loads(pixels_string)
+    pixels_dict = {'pixels': pixels_list}
+    pixels = json.dumps(pixels_dict)
+    art = Art(name=request.POST['name'], json_str=pixels)
+    art.show()
+    art.save()
+    return HttpResponseRedirect(reverse("pixel_app:index"))

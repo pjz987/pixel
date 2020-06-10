@@ -8,9 +8,18 @@
 {{ colors|json_script:"colors" }}
 <main id="app">
     <div id="canvas-and-aside">
-        <canvas width="500" height="500"></canvas>
+        <div id="canvas-and-form">
+            <form action="{% url 'pixel_app:save_pic' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" v-model="pixelsString" name="pixels-string">
+                <input type="text" name="name" placeholder="Save As...">
+                <button type="submit">Save</button>
+            </form>
+            <canvas width="500" height="500" @mousedown="colorPixel"></canvas>
+        </div>
         <div id="palette">
-            {% for color in }
+            <color-div v-for="color in colors" :key="color.id" :color="color" v-on:choose-active-color="chooseActiveColor">
+
         </div>
     </div>
 </main>
