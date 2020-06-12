@@ -31,7 +31,7 @@ var app = new Vue({
                     let gridObj = {
                         x: x,
                         y: y,
-                        color: ''
+                        color: 'white'
                     };
                     gridArr.push(gridObj);
                 };

@@ -24,6 +24,7 @@ class Color(models.Model):
 class Art(models.Model):
     name = models.CharField(max_length=200, default="Untitled")
     json_str = models.TextField()
+    image = models.ImageField(upload_to='art/', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -39,4 +40,14 @@ class Art(models.Model):
             draw.rectangle(((pixel['x'], pixel['y']), (pixel['x'] + 50, pixel['y'] + 50)), fill=pixel['color'])
         
         img.show()
+        print(img)
+        return img
+        # self.image = img
+        # self.save()
+        # img.save(f'../media/pics/{self.name}.png')
+    
+    def show_image(self):
+        print(self.image.url)
+        return self.image.url
+
 

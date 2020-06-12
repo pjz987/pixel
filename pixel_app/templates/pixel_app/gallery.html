@@ -1,0 +1,6 @@
+{% for art in gallery %}
+<h1>{{ art.name }}</h1>
+{% if art.image %}
+<img src="{{ art.image.url }}">
+{% endif %}
+{% endfor %}
