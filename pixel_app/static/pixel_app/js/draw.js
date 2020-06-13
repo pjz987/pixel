@@ -18,6 +18,7 @@ var app = new Vue({
         activeColor: 'white',
         pixelsString: '',
         increment: 50,
+        drawing: false,
     },
 
     computed: {
@@ -99,28 +100,30 @@ var app = new Vue({
         },
 
         colorPixel: function(event) {
-            console.log(this.gridArr)
-            let inc = parseInt(this.increment)
-            console.log(event)
-            let x = event.offsetX;
-            let y = event.offsetY;
-            console.log(x, y)
-            for (let i=0; i<this.gridArr.length; i++) {
-                // console.log(i)
-                let pixel = this.gridArr[i];
-                console.log(pixel)
-                if (x >= pixel.x
-                    && x < pixel.x + inc
-                    && y >= pixel.y
-                    && y < pixel.y + inc) {
-                    pixel.color = this.activeColor;
-                    console.log(this.gridArr)
-                    // console.log(this.activeColor)
-                    break
+            if (this.drawing === true) {
+                // console.log(this.gridArr)
+                let inc = parseInt(this.increment)
+                console.log(event)
+                let x = event.offsetX;
+                let y = event.offsetY;
+                console.log(x, y)
+                for (let i=0; i<this.gridArr.length; i++) {
+                    // console.log(i)
+                    let pixel = this.gridArr[i];
+                    console.log(pixel)
+                    if (x >= pixel.x
+                        && x < pixel.x + inc
+                        && y >= pixel.y
+                        && y < pixel.y + inc) {
+                        pixel.color = this.activeColor;
+                        console.log(this.gridArr)
+                        // console.log(this.activeColor)
+                        break
+                    };
                 };
-            };
-            this.fillPixels();
-            this.pixelsString = JSON.stringify(this.gridArr);
+                this.fillPixels();
+                this.pixelsString = JSON.stringify(this.gridArr);
+            }
         },
 
         fillPixels: function() {
