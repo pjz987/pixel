@@ -39,12 +39,13 @@ def choose_palette(request, id):
 def save_pic(request):
     pixels_string = request.POST['pixels-string']
     pixels_list = json.loads(pixels_string)
+    increment = int(request.POST['increment'])
 
     img = Image.new('RGB', (500, 500))
     draw = ImageDraw.Draw(img)
 
     for pixel in pixels_list:
-        draw.rectangle(((pixel['x'], pixel['y']), (pixel['x'] + 50, pixel['y'] + 50)), fill=pixel['color'])
+        draw.rectangle(((pixel['x'], pixel['y']), (pixel['x'] + increment, pixel['y'] + increment)), fill=pixel['color'])
 
     pixels_dict = {'pixels': pixels_list}
     pixels = json.dumps(pixels_dict)

@@ -17,6 +17,7 @@ var app = new Vue({
     data: {
         activeColor: 'white',
         pixelsString: '',
+        increment: 50,
     },
 
     computed: {
@@ -24,10 +25,13 @@ var app = new Vue({
             return JSON.parse(document.querySelector('#colors').textContent).colors;
         },
         gridArr: function() {
+            console.log('gridarr')
+            let inc = parseInt(this.increment)
+            // let inc = 50
             let gridArr = []
             let cnv = document.querySelector('canvas');
-            for(let x=0; x<cnv.width; x+=50) {
-                for (let y=0; y< cnv.height; y+=50) {
+            for(let x=0; x<cnv.width; x+=inc) {
+                for (let y=0; y<cnv.height; y+=inc) {
                     let gridObj = {
                         x: x,
                         y: y,
@@ -62,55 +66,97 @@ var app = new Vue({
             this.ctx.fillRect(0, 0, this.w, this.h);
             this.stroke();
         },
+
         stroke: function() {
-            for (let x=50; x<this.w; x+=50) {
+            // this.ctx.clearRect(0, 0, this.w, this.h)
+            let inc = parseInt(this.increment)
+
+            for (let x=inc; x<this.w; x+=inc) {
                 this.ctx.beginPath();
                 this.ctx.moveTo(x, 0);
                 this.ctx.lineTo(x, this.h);
                 this.ctx.stroke();
             };
-            for (let y=50; y<this.h; y+=50) {
+            for (let y=inc; y<this.h; y+=inc) {
                 this.ctx.beginPath();
                 this.ctx.moveTo(0, y);
                 this.ctx.lineTo(this.w, y);
                 this.ctx.stroke();
             };
         },
+
         testFunc: function(color) {
             console.log(color)
         },
+
         chooseActiveColor: function(color) {
             console.log(color)
             this.activeColor = color;
         },
+
         alertXY: function(event) {
             console.log(event.offsetX, event.offsetY);
         },
+
         colorPixel: function(event) {
+            console.log(this.gridArr)
+            let inc = parseInt(this.increment)
+            console.log(event)
             let x = event.offsetX;
             let y = event.offsetY;
+            console.log(x, y)
             for (let i=0; i<this.gridArr.length; i++) {
+                // console.log(i)
                 let pixel = this.gridArr[i];
+                console.log(pixel)
                 if (x >= pixel.x
-                    && x < pixel.x + 50
+                    && x < pixel.x + inc
                     && y >= pixel.y
-                    && y < pixel.y + 50) {
+                    && y < pixel.y + inc) {
                     pixel.color = this.activeColor;
+                    console.log(this.gridArr)
+                    // console.log(this.activeColor)
                     break
                 };
             };
             this.fillPixels();
             this.pixelsString = JSON.stringify(this.gridArr);
         },
+
         fillPixels: function() {
+            // console.log('hey')
+            this.ctx.clearRect(0, 0, this.w, this.h);
+            let inc = parseInt(this.increment)
             for (let i=0; i<this.gridArr.length; i++) {
                 let pixel = this.gridArr[i];
                 if (pixel.color) {
                     this.ctx.fillStyle = pixel.color;
-                    this.ctx.fillRect(pixel.x, pixel.y, 50, 50);
+                    this.ctx.fillRect(pixel.x, pixel.y, inc, inc);
+                    // console.log(pixel.color)
                 }
             };
             this.stroke();  
         },
+
+        // makeGridArr: function() {
+        //     let newGridArr = []
+        //     let cnv = document.querySelector('canvas');
+        //     for(let x=0; x<cnv.width; x+=this.increment) {
+        //         for (let y=0; y< cnv.height; y+=this.increment) {
+        //             let gridObj = {
+        //                 x: x,
+        //                 y: y,
+        //                 color: 'white'
+        //             };
+        //             newGridArr.push(gridObj);
+        //         };
+        //     };
+        //     this.gridArr = newGridArr;
+        // },
+
+        // changeInc: function() {
+        //     // this.makeGridArr();
+        //     this.stroke();
+        // }
     },
 });

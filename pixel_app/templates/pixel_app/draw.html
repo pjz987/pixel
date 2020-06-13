@@ -14,6 +14,10 @@
                 <input type="hidden" v-model="pixelsString" name="pixels-string">
                 <input type="text" name="name" placeholder="Save As...">
                 <button type="submit">Save</button>
+                <select v-model="increment" @change="stroke" name="increment">
+                    <option value="25">20x20</option>
+                    <option selected value="50">10x10</option>
+                </select>
             </form>
             <canvas width="500" height="500" @mousedown="colorPixel"></canvas>
         </div>
