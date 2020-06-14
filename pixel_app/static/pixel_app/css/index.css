@@ -24,6 +24,7 @@ canvas {
 
 .colors {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .color {
