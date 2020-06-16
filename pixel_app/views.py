@@ -49,9 +49,9 @@ def save_pic(request):
 
     pixels_dict = {'pixels': pixels_list}
     pixels = json.dumps(pixels_dict)
-    img.save('media/art/' + request.POST['name'] + '.png')
-    print('*'*40)
-    print(img.info)
+    # img.save('media/art/' + request.POST['name'] + '.png')
+    # print('*'*40)
+    # print(img.info)
 
     """BytesIO and InMemoryUploadedFile"""
     # temp_img = img
