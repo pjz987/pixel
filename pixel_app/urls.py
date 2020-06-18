@@ -9,5 +9,6 @@ urlpatterns = [
     path('save-palette/', views.save_palette, name='save_palette'),
     path('choose-palette/<int:id>/', views.choose_palette, name='choose_palette'),
     path('save-pic/', views.save_pic, name='save_pic'),
-    path('gallery/', views.gallery, name='gallery')
+    path('gallery/', views.gallery, name='gallery'),
+    path('edit/<int:pk>/', views.edit, name='edit'),
 ]

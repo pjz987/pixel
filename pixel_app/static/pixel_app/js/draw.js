@@ -17,8 +17,9 @@ var app = new Vue({
     data: {
         activeColor: 'white',
         pixelsString: '',
-        increment: 50,
+        increment: 10,
         drawing: false,
+        inPixels: JSON.parse(document.querySelector('#pixels_str').textContent),
     },
 
     computed: {
@@ -27,6 +28,9 @@ var app = new Vue({
         },
         gridArr: function() {
             console.log('gridarr')
+            if (this.inPixels) {
+                return this.inPixels.colors;
+            };
             let inc = parseInt(this.increment)
             // let inc = 50
             let gridArr = []
@@ -53,7 +57,7 @@ var app = new Vue({
         this.h = cnv.height;
         this.ctx.clearRect(0, 0, this.w, this.h);
         this.stroke();
-        // this.gridArr = []
+        // this.inPixels = JSON.parse(document.querySelector('#pixels_str').textContent)
     },
 
     components: {
@@ -84,6 +88,11 @@ var app = new Vue({
                 this.ctx.lineTo(this.w, y);
                 this.ctx.stroke();
             };
+
+            // one circle
+            this.ctx.beginPath();
+            this.ctx.arc(250, 250, 200, 0, 2*Math.PI);
+            this.ctx.stroke();
 
             // // drawing a circle for practice
             // for(let i=1; i<8; i++) {

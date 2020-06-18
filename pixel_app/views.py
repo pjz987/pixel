@@ -72,3 +72,22 @@ def save_pic(request):
 def gallery(request):
     gallery = Art.objects.all()
     return render(request, 'pixel_app/gallery.html', {'gallery': gallery})
+
+def edit(request, pk):
+    art = Art.objects.get(pk=pk)
+    print('Art')
+    print(art.name)
+    pixels_str = art.json_str
+    print('JSON')
+    print(pixels_str)
+    pixels_dict = json.loads(pixels_str)
+    colors_list = []
+    for pixel in pixels_dict['pixels']:
+        colors_list.append(pixel['color'])
+    color_set = set(colors_list)
+    print(color_set)
+    color_dict = {'colors': list(color_set)}
+    print(color_dict)
+    colors = json.dumps({'colors':list(set(colors_list))})
+    print(colors)
+    return render(request, 'pixel_app/draw.html', {'pixels_str': pixels_dict, 'colors': color_dict})

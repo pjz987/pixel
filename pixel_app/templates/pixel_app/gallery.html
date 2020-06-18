@@ -1,6 +1,9 @@
 {% for art in gallery %}
-<h1>{{ art.name }}</h1>
+<h1>
+    {{ art.name }}
+    <a  href="{% url 'pixel_app:edit' pk=art.pk %}"><button>Edit</button></a>
+</h1>
 {% if art.image %}
-<img src="{{ art.image.url }}">
+    <img src="{{ art.image.url }}">
 {% endif %}
 {% endfor %}
