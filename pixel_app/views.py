@@ -45,7 +45,7 @@ def save_pic(request):
     draw = ImageDraw.Draw(img)
 
     for pixel in pixels_list:
-        draw.rectangle(((pixel['x'], pixel['y']), (pixel['x'] + increment, pixel['y'] + increment)), fill=pixel['color'])
+        draw.rectangle(((pixel['x'], pixel['y']), (pixel['x'] + increment, pixel['y'] + increment)), fill=pixel['color'].strip())
 
     pixels_dict = {'pixels': pixels_list}
     pixels = json.dumps(pixels_dict)

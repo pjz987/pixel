@@ -19,34 +19,38 @@ var app = new Vue({
         pixelsString: '',
         increment: 10,
         drawing: false,
-        inPixels: JSON.parse(document.querySelector('#pixels_str').textContent),
+        // inPixels: JSON.parse(document.querySelector('#pixels_str').textContent),
     },
 
     computed: {
         colors: function() {
             return JSON.parse(document.querySelector('#colors').textContent).colors;
         },
-        gridArr: function() {
-            console.log('gridarr')
-            if (this.inPixels) {
-                return this.inPixels.colors;
-            };
-            let inc = parseInt(this.increment)
-            // let inc = 50
-            let gridArr = []
-            let cnv = document.querySelector('canvas');
-            for(let x=0; x<cnv.width; x+=inc) {
-                for (let y=0; y<cnv.height; y+=inc) {
-                    let gridObj = {
-                        x: x,
-                        y: y,
-                        color: 'white'
-                    };
-                    gridArr.push(gridObj);
-                };
-            };
-            return gridArr
+
+        inPixels: function() {
+            return JSON.parse(document.querySelector('#pixels_str').textContent);
         }
+        // gridArr: function() {
+        //     console.log('gridarr')
+        //     if (this.inPixels) {
+        //         return this.inPixels.colors;
+        //     };
+        //     let inc = parseInt(this.increment)
+        //     // let inc = 50
+        //     let gridArr = []
+        //     let cnv = document.querySelector('canvas');
+        //     for(let x=0; x<cnv.width; x+=inc) {
+        //         for (let y=0; y<cnv.height; y+=inc) {
+        //             let gridObj = {
+        //                 x: x,
+        //                 y: y,
+        //                 color: 'white'
+        //             };
+        //             gridArr.push(gridObj);
+        //         };
+        //     };
+        //     return gridArr
+        // }
     },
 
     mounted() {
@@ -58,6 +62,33 @@ var app = new Vue({
         this.ctx.clearRect(0, 0, this.w, this.h);
         this.stroke();
         // this.inPixels = JSON.parse(document.querySelector('#pixels_str').textContent)
+
+        // this.inPixels = JSON.parse(document.querySelector('#pixels_str').textContent);
+
+        if (this.inPixels) {
+            console.log('abc')
+            console.log(this.inPixels)
+            this.gridArr = this.inPixels.pixels;
+        } else {
+            console.log('123')
+            let inc = parseInt(this.increment)
+            // let inc = 50
+            let gridArr = []
+            let cnv = document.querySelector('canvas');
+            for(let x=0; x<cnv.width; x+=inc) {
+                for (let y=0; y<cnv.height; y+=inc) {
+                    let gridObj = {
+                        x: x,
+                        y: y,
+                        // color: 'black',
+                        color: 'white',
+                    };
+                    gridArr.push(gridObj);
+                };
+            };
+            this.gridArr = gridArr
+        };
+
     },
 
     components: {
@@ -74,7 +105,8 @@ var app = new Vue({
 
         stroke: function() {
             // this.ctx.clearRect(0, 0, this.w, this.h)
-            let inc = parseInt(this.increment)
+            let inc = parseInt(this.increment);
+            // this.ctx.strokeStyle = 'white';
 
             for (let x=inc; x<this.w; x+=inc) {
                 this.ctx.beginPath();
@@ -89,10 +121,51 @@ var app = new Vue({
                 this.ctx.stroke();
             };
 
-            // one circle
-            this.ctx.beginPath();
-            this.ctx.arc(250, 250, 200, 0, 2*Math.PI);
-            this.ctx.stroke();
+            // // horiz rule
+            // let ruleArrHor = [
+            //     (1/3) * this.h,
+            //     (2/3) * this.h,
+            // ];
+            // for (let i=0; i<ruleArrHor.length; i++) {
+            //     this.ctx.beginPath();
+            //     this.ctx.moveTo(0, ruleArrHor[i]);
+            //     this.ctx.lineTo(this.w, ruleArrHor[i]);
+            //     this.ctx.stroke();
+            // }
+
+            // // vert rule
+            // let ruleArrVert = [
+            //     (1/6) * this.w,
+            //     (2/6) * this.w,
+            //     (3/6) * this.w,
+            //     (4/6) * this.w,
+            //     (5/6) * this.w,
+            // ];
+            // for (let i=0; i<ruleArrVert.length; i++) {
+            //     this.ctx.beginPath();
+            //     this.ctx.moveTo(ruleArrVert[i], 0);
+            //     this.ctx.lineTo(ruleArrVert[i], this.h);
+            //     this.ctx.stroke();
+            // }
+
+            // // four circles
+            // let circArr = [
+            //     {x: 127, y: 345, r: 123},
+            //     {x: 234, y: 123, r: 87},
+            //     {x: 343, y: 356, r: 134},
+            //     {x: 394, y: 89, r: 45},
+            // ]
+            // for (let i=0; i<circArr.length; i++) {
+            //     let circ = circArr[i];
+            //     this.ctx.beginPath();
+            //     this.ctx.arc(circ.x, circ.y, circ.r, 0, 2*Math.PI);
+            //     this.ctx.stroke();
+            // }
+
+            // // one circle
+            // this.ctx.beginPath();
+            // this.ctx.arc(250, 250, 200, 0, 2*Math.PI);
+            // this.ctx.stroke();
 
             // // drawing a circle for practice
             // for(let i=1; i<8; i++) {
