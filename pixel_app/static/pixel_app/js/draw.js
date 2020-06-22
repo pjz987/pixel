@@ -17,7 +17,7 @@ var app = new Vue({
     data: {
         activeColor: 'white',
         pixelsString: '',
-        increment: 10,
+        increment: 5,
         drawing: false,
         // inPixels: JSON.parse(document.querySelector('#pixels_str').textContent),
     },
@@ -29,28 +29,22 @@ var app = new Vue({
 
         inPixels: function() {
             return JSON.parse(document.querySelector('#pixels_str').textContent);
-        }
-        // gridArr: function() {
-        //     console.log('gridarr')
-        //     if (this.inPixels) {
-        //         return this.inPixels.colors;
-        //     };
-        //     let inc = parseInt(this.increment)
-        //     // let inc = 50
-        //     let gridArr = []
-        //     let cnv = document.querySelector('canvas');
-        //     for(let x=0; x<cnv.width; x+=inc) {
-        //         for (let y=0; y<cnv.height; y+=inc) {
-        //             let gridObj = {
-        //                 x: x,
-        //                 y: y,
-        //                 color: 'white'
-        //             };
-        //             gridArr.push(gridObj);
-        //         };
-        //     };
-        //     return gridArr
-        // }
+        },
+
+        tempArr: function() {
+            let inc = parseInt(this.increment);
+            let tempArr = []
+            for (let x=0; x<this.w; x+=inc) {
+                for (let y=0; y<this.h; y+=inc) {
+                    let tempObj = {
+                        x: x,
+                        y: y,
+                    };
+                    tempArr.push(tempObj);
+                };
+            };
+            return tempArr;
+        },
     },
 
     mounted() {
@@ -106,7 +100,9 @@ var app = new Vue({
         stroke: function() {
             // this.ctx.clearRect(0, 0, this.w, this.h)
             let inc = parseInt(this.increment);
-            // this.ctx.strokeStyle = 'white';
+            this.ctx.strokeStyle = 'white';
+
+            this.ctx.lineWidth = 0.5;
 
             for (let x=inc; x<this.w; x+=inc) {
                 this.ctx.beginPath();
@@ -120,6 +116,13 @@ var app = new Vue({
                 this.ctx.lineTo(this.w, y);
                 this.ctx.stroke();
             };
+
+            // six circles
+            for (let i=0; i<6; i++) {
+                this.ctx.beginPath();
+                this.ctx.arc(250, 250, 250 - i * 40, 0, 2*Math.PI);
+                this.ctx.stroke();
+            }
 
             // // horiz rule
             // let ruleArrHor = [
@@ -239,29 +242,52 @@ var app = new Vue({
 
         colorPixel: function(event) {
             if (this.drawing === true) {
-                // console.log(this.gridArr)
                 let inc = parseInt(this.increment)
-                // console.log(event)
                 let x = event.offsetX;
                 let y = event.offsetY;
-                // console.log(x, y)
                 for (let i=0; i<this.gridArr.length; i++) {
-                    // console.log(i)
                     let pixel = this.gridArr[i];
-                    // console.log(pixel)
                     if (x >= pixel.x
                         && x < pixel.x + inc
                         && y >= pixel.y
                         && y < pixel.y + inc) {
                         pixel.color = this.activeColor;
-                        // console.log(this.gridArr)
-                        // console.log(this.activeColor)
-                        break
+                        // break
                     };
                 };
                 this.fillPixels();
                 this.pixelsString = JSON.stringify(this.gridArr);
             }
+        },
+
+        colorPixel2: function(event) {
+            if (this.drawing === true) {
+                let inc = parseInt(this.increment);
+                let eventX = event.offsetX;
+                let eventY = event.offsetY;
+
+                for (let i=0; i<this.tempArr.length; i++) {
+                    let tempPixel = this.tempArr[i];
+                    if (eventX >= tempPixel.x
+                        && eventX < tempPixel.x + inc
+                        && eventY >= tempPixel.y
+                        && eventY < tempPixel.y + inc) {
+
+                            for (let j=0; j<this.gridArr.length; j++) {
+                                let pixel = this.gridArr[j];
+                                if (pixel.x >= tempPixel.x
+                                    && pixel.x < tempPixel.x + inc
+                                    && pixel.y >= tempPixel.y
+                                    && pixel.y < tempPixel.y + inc) {
+                                        pixel.color = this.activeColor;
+                                    };
+                            };
+                            break
+                        };
+                };
+                this.fillPixels();
+                this.pixelsString = JSON.stringify(this.gridArr);
+            };
         },
 
         fillPixels: function() {
@@ -278,26 +304,5 @@ var app = new Vue({
             };
             this.stroke();  
         },
-
-        // makeGridArr: function() {
-        //     let newGridArr = []
-        //     let cnv = document.querySelector('canvas');
-        //     for(let x=0; x<cnv.width; x+=this.increment) {
-        //         for (let y=0; y< cnv.height; y+=this.increment) {
-        //             let gridObj = {
-        //                 x: x,
-        //                 y: y,
-        //                 color: 'white'
-        //             };
-        //             newGridArr.push(gridObj);
-        //         };
-        //     };
-        //     this.gridArr = newGridArr;
-        // },
-
-        // changeInc: function() {
-        //     // this.makeGridArr();
-        //     this.stroke();
-        // }
     },
 });

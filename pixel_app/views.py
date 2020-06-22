@@ -41,6 +41,10 @@ def save_pic(request):
     pixels_list = json.loads(pixels_string)
     increment = int(request.POST['increment'])
 
+    increment = 5 
+    print('*'*40)
+    print(increment)
+
     img = Image.new('RGB', (500, 500))
     draw = ImageDraw.Draw(img)
 
@@ -49,6 +53,8 @@ def save_pic(request):
 
     pixels_dict = {'pixels': pixels_list}
     pixels = json.dumps(pixels_dict)
+
+    print(img.size)
     # img.save('media/art/' + request.POST['name'] + '.png')
     # print('*'*40)
     # print(img.info)

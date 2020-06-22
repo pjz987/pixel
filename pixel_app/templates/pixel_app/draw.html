@@ -15,14 +15,15 @@
                 <input type="hidden" v-model="pixelsString" name="pixels-string">
                 <input type="text" name="name" placeholder="Save As...">
                 <button type="submit">Save</button>
-                <select v-model="increment" @change="stroke" name="increment">
+                <select v-model="increment" @change="fillPixels" name="increment">
                     <option value="50">10x10</option>
                     <option value="25">20x20</option>
                     <option value="20">25x25</option>
-                    <option selected value="10">50x50</option>
+                    <option value="10">50x50</option>
+                    <option selected value="5">100x100</option>
                 </select>
             </form>
-            <canvas width="500" height="500" @mousedown="[drawing=true, colorPixel]" @mouseup="drawing=false" @mousemove="colorPixel" @mouseleave="drawing=false"></canvas>
+            <canvas width="500" height="500" @mousedown="[drawing=true, colorPixel]" @mouseup="drawing=false" @mousemove="colorPixel2" @mouseleave="drawing=false"></canvas>
         </div>
         <div id="palette">
             <color-div v-for="color in colors" :key="color.id" :color="color" v-on:choose-active-color="chooseActiveColor">
