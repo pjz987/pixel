@@ -19,6 +19,7 @@ var app = new Vue({
         pixelsString: '',
         increment: 5,
         drawing: false,
+        quadrant: 0,
         // inPixels: JSON.parse(document.querySelector('#pixels_str').textContent),
     },
 
@@ -303,6 +304,34 @@ var app = new Vue({
                 }
             };
             this.stroke();  
+        },
+
+        wheelTest: function(e) {
+            e.preventDefault();
+            // console.log(e.offsetY)
+            // console.log('wheel');
+            // console.log(e.deltaY);
+            // console.log(e)
+            let x = e.offsetX;
+            let y = e.offsetY;
+            if (e.deltaY < 0) {
+                if (x >= this.w / 2
+                    && y <= this.h / 2) {
+                        this.quadrant = 1;
+                } else if (x <= this.w / 2
+                    && y <= this.h / 2) {
+                        this.quadrant = 2;
+                } else if (x <= this.w / 2
+                    && y >= this.h / 2) {
+                        this.quadrant = 3;
+                } else if (x >= this.w / 2
+                    && y>= this.h / 2) {
+                        this.quadrant = 4;
+                };
+            } else {
+                this.quadrant = 0;
+            };
+            console.log(this.quadrant);
         },
     },
 });
