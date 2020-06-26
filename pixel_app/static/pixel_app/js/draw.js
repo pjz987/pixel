@@ -72,11 +72,26 @@ var app = new Vue({
             let cnv = document.querySelector('canvas');
             for(let x=0; x<cnv.width; x+=inc) {
                 for (let y=0; y<cnv.height; y+=inc) {
+                    let q;
+                    if (y < this.h / 2) {
+                        if (x >= this.w / 2) {
+                            q = 1;
+                        } else {
+                            q = 2;
+                        };
+                    } else {
+                        if (x < this.w / 2) {
+                            q = 3;
+                        } else {
+                            q = 4;
+                        };
+                    };
                     let gridObj = {
                         x: x,
                         y: y,
                         // color: 'black',
                         color: 'white',
+                        q: q,
                     };
                     gridArr.push(gridObj);
                 };
@@ -101,6 +116,9 @@ var app = new Vue({
         stroke: function() {
             // this.ctx.clearRect(0, 0, this.w, this.h)
             let inc = parseInt(this.increment);
+            if (this.quadrant) {
+                inc *= 2;
+            };
             this.ctx.strokeStyle = 'white';
 
             this.ctx.lineWidth = 0.5;
