@@ -119,7 +119,7 @@ var app = new Vue({
             if (this.quadrant) {
                 inc *= 2;
             };
-            this.ctx.strokeStyle = 'white';
+            // this.ctx.strokeStyle = 'white';
 
             this.ctx.lineWidth = 0.5;
 
@@ -304,7 +304,7 @@ var app = new Vue({
                             break
                         };
                 };
-                this.fillPixels();
+                this.fillPixels2();
                 this.pixelsString = JSON.stringify(this.gridArr);
             };
         },
@@ -322,6 +322,39 @@ var app = new Vue({
                 }
             };
             this.stroke();  
+        },
+
+        fillPixels2: function() {
+            this.ctx.clearRect(0, 0, this.w, this.h);
+            let inc = parseInt(this.increment);
+            
+            console.log(inc)
+
+            for (let i=0; i<this.gridArr.length; i++) {
+                let pixel = this.gridArr[i];
+                this.ctx.fillStyle = pixel.color;
+
+                if (!(this.quadrant)) {
+                    this.ctx.fillRect(pixel.x, pixel.y, inc, inc);
+
+                } else {
+                    inc *= 2;
+                    
+                    if (this.quadrant === 1) {
+                        if (pixel.q === 1) {
+                            console.log(pixel.q)
+                            this.ctx.fillStyle = pixel.color;
+                            this.ctx.fillRect((pixel.x - (this.w / 2)) * 2, pixel.y * 2, inc, inc);
+                            // if (pixel.color != 'white') {
+                            //     console.log((pixel.x - (this.w / 2)) * 2, pixel.y * 2)
+                            //     console.log(pixel.color)
+
+                            // }
+                        }
+                    }
+                }
+            }
+            this.stroke();
         },
 
         wheelTest: function(e) {
