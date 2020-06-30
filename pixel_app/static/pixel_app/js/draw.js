@@ -93,6 +93,19 @@ var app = new Vue({
                         color: 'white',
                         q: q,
                     };
+                    if (gridObj.q === 1) {
+                        gridObj.qX = (gridObj.x - this.w / 2) * 2;
+                        gridObj.qY = gridObj.y * 2;
+                    } else if (gridObj.q === 2) {
+                        gridObj.qX = gridObj.x * 2;
+                        gridObj.qY = gridObj.y * 2;
+                    } else if (gridObj.q === 3) {
+                        gridObj.qX = gridObj.x * 2;
+                        gridObj.qY = (gridObj.y - this.h / 2) * 2;
+                    } else if (gridObj.q === 4) {
+                        gridObj.qX = (gridObj.x - this.w / 2) * 2;
+                        gridObj.qY = (gridObj.y - this.h / 2) * 2;
+                    }
                     gridArr.push(gridObj);
                 };
             };
@@ -282,6 +295,9 @@ var app = new Vue({
         colorPixel2: function(event) {
             if (this.drawing === true) {
                 let inc = parseInt(this.increment);
+                // if (this.quadrant) {
+                //     inc *= 2;
+                // };
                 let eventX = event.offsetX;
                 let eventY = event.offsetY;
 
@@ -294,6 +310,9 @@ var app = new Vue({
 
                             for (let j=0; j<this.gridArr.length; j++) {
                                 let pixel = this.gridArr[j];
+                                // if (!(this.quadrant)) {
+
+                                // };
                                 if (pixel.x >= tempPixel.x
                                     && pixel.x < tempPixel.x + inc
                                     && pixel.y >= tempPixel.y
@@ -327,8 +346,10 @@ var app = new Vue({
         fillPixels2: function() {
             this.ctx.clearRect(0, 0, this.w, this.h);
             let inc = parseInt(this.increment);
-            
-            console.log(inc)
+            if (this.quadrant) {
+                inc *= 2;
+            }
+            // console.log(inc)
 
             for (let i=0; i<this.gridArr.length; i++) {
                 let pixel = this.gridArr[i];
@@ -338,22 +359,23 @@ var app = new Vue({
                     this.ctx.fillRect(pixel.x, pixel.y, inc, inc);
 
                 } else {
-                    inc *= 2;
+                    // inc *= 2;
+                    if (this.quadrant === pixel.q) {
+                        this.ctx.fillRect(pixel.qX, pixel.qY, inc, inc)
+                    };
                     
-                    if (this.quadrant === 1) {
-                        if (pixel.q === 1) {
-                            console.log(pixel.q)
-                            this.ctx.fillStyle = pixel.color;
-                            this.ctx.fillRect((pixel.x - (this.w / 2)) * 2, pixel.y * 2, inc, inc);
-                            // if (pixel.color != 'white') {
-                            //     console.log((pixel.x - (this.w / 2)) * 2, pixel.y * 2)
-                            //     console.log(pixel.color)
+                    // if (this.quadrant === 1 && pixel.q === 1) {
+                    //     this.ctx.fillRect((pixel.x - (this.w / 2)) * 2, pixel.y * 2, inc, inc);
 
-                            // }
-                        }
-                    }
-                }
-            }
+                    // } else if (this.quadrant === 2 && pixel.q === 2) {
+                    //     this.ctx.fillRect(pixel.x*2, pixel.y*2, inc, inc);
+                    // } else if (this.quadrant === 3 && pixel.q === 3) {
+                    //     this.ctx.fillRect(pixel.x*2, (pixel.y - this.h / 2) *2, inc, inc);
+                    // } else if (this.quadrant === 4 && pixel.q === 4) {
+                    //     this.ctx.fillRect((pixel.x - this.w/2)*2, (pixel.y - this.h/2)*2, inc, inc);
+                    // };
+                };
+            };
             this.stroke();
         },
 
@@ -383,6 +405,7 @@ var app = new Vue({
                 this.quadrant = 0;
             };
             console.log(this.quadrant);
+            this.fillPixels2();
         },
     },
 });
