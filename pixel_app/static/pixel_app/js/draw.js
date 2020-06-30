@@ -34,7 +34,10 @@ var app = new Vue({
 
         tempArr: function() {
             let inc = parseInt(this.increment);
-            let tempArr = []
+            if (this.quadrant) {
+                inc *= 2;
+            }
+            let tempArr = [];
             for (let x=0; x<this.w; x+=inc) {
                 for (let y=0; y<this.h; y+=inc) {
                     let tempObj = {
@@ -310,17 +313,26 @@ var app = new Vue({
 
                             for (let j=0; j<this.gridArr.length; j++) {
                                 let pixel = this.gridArr[j];
-                                // if (!(this.quadrant)) {
-
-                                // };
-                                if (pixel.x >= tempPixel.x
-                                    && pixel.x < tempPixel.x + inc
-                                    && pixel.y >= tempPixel.y
-                                    && pixel.y < tempPixel.y + inc) {
-                                        pixel.color = this.activeColor;
-                                    };
+                                if (!(this.quadrant)) {
+                                    if (pixel.x >= tempPixel.x
+                                        && pixel.x < tempPixel.x + inc
+                                        && pixel.y >= tempPixel.y
+                                        && pixel.y < tempPixel.y + inc) {
+                                            pixel.color = this.activeColor;
+                                        };
+                                } else {
+                                    if (pixel.q === this.quadrant) {
+                                        if (pixel.qX >= tempPixel.x
+                                            && pixel.qX < tempPixel.x + inc
+                                            && pixel.qY >= tempPixel.y
+                                            && pixel.qY < tempPixel.y + inc) {
+                                                pixel.color = this.activeColor;
+                                            };
+    
+                                    }
+                                };
                             };
-                            break
+                            // break
                         };
                 };
                 this.fillPixels2();
