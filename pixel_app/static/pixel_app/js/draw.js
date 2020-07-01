@@ -135,7 +135,7 @@ var app = new Vue({
             if (this.quadrant) {
                 inc *= 2;
             };
-            this.ctx.strokeStyle = 'white';
+            // this.ctx.strokeStyle = 'white';
 
             this.ctx.lineWidth = 0.5;
 
