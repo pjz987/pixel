@@ -135,7 +135,7 @@ var app = new Vue({
             if (this.quadrant) {
                 inc *= 2;
             };
-            // this.ctx.strokeStyle = 'white';
+            this.ctx.strokeStyle = 'white';
 
             this.ctx.lineWidth = 0.5;
 
@@ -155,7 +155,19 @@ var app = new Vue({
             // six circles
             for (let i=0; i<6; i++) {
                 this.ctx.beginPath();
-                this.ctx.arc(250, 250, 250 - i * 40, 0, 2*Math.PI);
+                if (!(this.quadrant)) {
+                    this.ctx.arc(250, 250, 250 - i * 40, 0, 2*Math.PI);
+                } else {
+                    if (this.quadrant === 1) {
+                        this.ctx.arc(0, 500, 500 - i * 80, 0, 2*Math.PI);
+                    } else if (this.quadrant === 2) {
+                        this.ctx.arc(500, 500, 500 - i * 80, 0, 2*Math.PI);
+                    } else if (this.quadrant === 3) {
+                        this.ctx.arc(500, 0, 500 - i * 80, 0, 2*Math.PI);
+                    } else if (this.quadrant === 4) {
+                        this.ctx.arc(0, 0, 500 - i * 80, 0, 2*Math.PI);
+                    }
+                }
                 this.ctx.stroke();
             }
 
@@ -332,7 +344,7 @@ var app = new Vue({
                                     }
                                 };
                             };
-                            // break
+                            break
                         };
                 };
                 this.fillPixels2();
