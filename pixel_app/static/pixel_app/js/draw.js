@@ -310,9 +310,9 @@ var app = new Vue({
         colorPixel2: function(event) {
             if (this.drawing === true) {
                 let inc = parseInt(this.increment);
-                // if (this.quadrant) {
-                //     inc *= 2;
-                // };
+                if (this.quadrant) {
+                    inc *= 2;
+                };
                 let eventX = event.offsetX;
                 let eventY = event.offsetY;
 
