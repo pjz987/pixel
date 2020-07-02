@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .color {
+            height: 100px;
+            width: 100px;
+            margin: 5px;
+        }
+        #colors {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click="newColor">New Color</button>
+        <div id="colors">
+            <div v-for="color in colors" class="color" :style="{ backgroundColor: color, }">{{color}}</div>
+        </div>
+    </div>
+    <script>
+        // var colorDiv = {
+        //     props: ['color'],
+        //     template:
+        // }
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                colors: [],
+            },
+            methods: {
+                newColor: function() {
+                    this.colors.push(chroma.random())
+                }
+            }
+        })
+    </script>
+</body>
+</html>
