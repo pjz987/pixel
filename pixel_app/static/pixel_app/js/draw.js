@@ -136,6 +136,7 @@ var app = new Vue({
                 inc *= 2;
             };
             // this.ctx.strokeStyle = 'white';
+            this.ctx.strokeStyle = 'orange';
 
             this.ctx.lineWidth = 0.5;
 
@@ -151,6 +152,32 @@ var app = new Vue({
                 this.ctx.lineTo(this.w, y);
                 this.ctx.stroke();
             };
+
+            // one circle
+            if (!(this.quadrant)) {
+                this.ctx.beginPath();
+                this.ctx.arc(250, 250, 200, 0, 2*Math.PI);
+                this.ctx.stroke();
+            } else {
+                let x;
+                let y;
+                if(this.quadrant === 1) {
+                    x = 0;
+                    y = 500;
+                } else if (this.quadrant === 2) {
+                    x = 500;
+                    y = 500;
+                } else if (this.quadrant === 3) {
+                    x = 500;
+                    y = 0;
+                } else if (this.quadrant === 4) {
+                    x = 0;
+                    y = 0;
+                }
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, 400, 0, 2*Math.PI);
+                this.ctx.stroke();
+            }
 
             // // six circles
             // for (let i=0; i<6; i++) {
