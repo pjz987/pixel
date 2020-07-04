@@ -11,4 +11,6 @@ urlpatterns = [
     path('save-pic/', views.save_pic, name='save_pic'),
     path('gallery/', views.gallery, name='gallery'),
     path('edit/<int:pk>/', views.edit, name='edit'),
+    path('get-palettes/', views.get_palettes, name='get_palettes'),
+    path('draw/', views.draw, name='draw'),
 ]

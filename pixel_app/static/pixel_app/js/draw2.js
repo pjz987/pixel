@@ -20,7 +20,15 @@ var app = new Vue({
         increment: 5,
         drawing: false,
         quadrant: 0,
+        palettes: [],
         // inPixels: JSON.parse(document.querySelector('#pixels_str').textContent),
+    },
+
+    delimiters: ['[[', ']]'],
+
+    created: function() {
+        console.log(document.querySelector('#get_palettes').textContent);
+        this.getPalettes();
     },
 
     computed: {
@@ -122,6 +130,21 @@ var app = new Vue({
     },
 
     methods: {
+        getPalettes: function() {
+            let url = JSON.parse(document.querySelector('#get_palettes').textContent);
+            console.log(url)
+            axios({
+                method: 'get',
+                url: url.url,
+                // url: '/get-palettes/',
+            }).catch(error => {
+                console.log(error);
+            }).then(response => {
+                console.log(response);
+                this.palettes = response.data.palettes;
+            });
+        },
+
         fill: function() {
             this.ctx.clearRect(0, 0, this.w, this.h);
             this.ctx.fillStyle = this.activeColor;

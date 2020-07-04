@@ -97,3 +97,22 @@ def edit(request, pk):
     colors = json.dumps({'colors':list(set(colors_list))})
     print(colors)
     return render(request, 'pixel_app/draw.html', {'pixels_str': pixels_dict, 'colors': color_dict})
+
+"""
+Views for draw2
+"""
+
+def get_palettes(request):
+    palettes = []
+    for palette in Palette.objects.all():
+        colors = [[color.name, color.pk] for color in palette.color_set.all()]
+        palettes.append({
+            'pk': palette.pk,
+            'name': palette.name,
+            'colors': colors,
+        })
+    return JsonResponse({'palettes': palettes})
+
+def draw(request):
+    context = {'get_palettes': {'url': reverse('pixel_app:get_palettes')}}
+    return render(request, 'pixel_app/draw2.html', context)
