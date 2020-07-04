@@ -1,6 +1,8 @@
 {% load static %}
+
 <head>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'pixel_app/css/draw2.css' %}">
@@ -25,17 +27,18 @@
                     <option value="10">50x50</option>
                     <option selected value="5">100x100</option>
                 </select>
-                <select name="active-palette">
-                    <option v-for="palette in palettes" :value="palette.pk">[[ palette.name ]]</option>
-                </select>
             </form>
-            <canvas width="500" height="500" @mousedown="[drawing=true, colorPixel]" @mouseup="drawing=false" @mousemove="colorPixel2" @mouseleave="drawing=false"
-            @wheel="wheelTest"></canvas>
+            <canvas width="500" height="500" @mousedown="[drawing=true, colorPixel]" @mouseup="drawing=false"
+                @mousemove="colorPixel2" @mouseleave="drawing=false" @wheel="wheelTest"></canvas>
         </div>
         <!-- <pallete v-for="palette in palettes"></pallete> -->
-        <!-- <div id="palette">
-            <color-div v-for="color in colors" :key="color.id" :color="color" v-on:choose-active-color="chooseActiveColor">
-
-        </div> -->
+        <div v-if="activePalette" id="palette">
+            <color-div v-for="color in palette.colors" :key="color.pk" :color="color.name" v-on:choose-active-color="chooseActiveColor" class="color">
+            </color-div>
+        </div>
     </div>
+    <select v-model="activePalette">
+        <option :value="null" selected>Choose Palette</option>
+        <option v-for="palette in palettes" :value="palette.pk">[[ palette.name ]]</option>
+    </select>
 </main>

@@ -105,7 +105,7 @@ Views for draw2
 def get_palettes(request):
     palettes = []
     for palette in Palette.objects.all():
-        colors = [[color.name, color.pk] for color in palette.color_set.all()]
+        colors = [{'name': color.name, 'pk': color.pk} for color in palette.color_set.all()]
         palettes.append({
             'pk': palette.pk,
             'name': palette.name,

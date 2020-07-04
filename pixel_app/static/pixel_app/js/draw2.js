@@ -21,6 +21,7 @@ var app = new Vue({
         drawing: false,
         quadrant: 0,
         palettes: [],
+        activePalette: null,
         // inPixels: JSON.parse(document.querySelector('#pixels_str').textContent),
     },
 
@@ -32,6 +33,17 @@ var app = new Vue({
     },
 
     computed: {
+        palette: function() {
+            if (this.activePalette) {
+                for (let i=0; i<this.palettes.length; i++) {
+                    let palette = this.palettes[i]
+                    if (this.activePalette === palette.pk) {
+                        return palette
+                    }
+                }
+            }
+        },
+
         colors: function() {
             return JSON.parse(document.querySelector('#colors').textContent).colors;
         },
