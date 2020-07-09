@@ -96,7 +96,7 @@ def edit(request, pk):
     print(color_dict)
     colors = json.dumps({'colors':list(set(colors_list))})
     print(colors)
-    return render(request, 'pixel_app/draw.html', {'pixels_str': pixels_dict, 'colors': color_dict})
+    return render(request, 'pixel_app/draw2.html', {'pixels_str': pixels_dict, 'colors': color_dict, 'get_palettes': {'url': reverse('pixel_app:get_palettes')}})
 
 """
 Views for draw2
