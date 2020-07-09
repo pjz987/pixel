@@ -50,4 +50,5 @@ class Art(models.Model):
         print(self.image.url)
         return self.image.url
 
-
+class LospecPalette(models.Model)
+    
