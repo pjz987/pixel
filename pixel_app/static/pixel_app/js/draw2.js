@@ -180,8 +180,9 @@ var app = new Vue({
                 if (this.quadrant) {
                     inc *= 2;
                 };
-                this.ctx.strokeStyle = 'white';
+                // this.ctx.strokeStyle = 'white';
                 // this.ctx.strokeStyle = 'orange';
+                this.ctx.strokeStyle = '#ed2939'
 
                 this.ctx.lineWidth = 0.5;
 
@@ -198,20 +199,20 @@ var app = new Vue({
                     this.ctx.stroke();
                 };
 
-                // vanishing point
-                this.ctx.beginPath();
-                if (!(this.quadrant)){
-                    this.ctx.moveTo(125, 500);
-                    this.ctx.lineTo(250, 250);
-                    this.ctx.lineTo(375, 500);   
-                } else if (this.quadrant === 3) {
-                    this.ctx.moveTo(250, 500);
-                    this.ctx.lineTo(500, 0);
-                } else if (this.quadrant === 4) {
-                    this.ctx.moveTo(0, 0);
-                    this.ctx.lineTo(250, 500);
-                }
-                this.ctx.stroke();
+                // // vanishing point
+                // this.ctx.beginPath();
+                // if (!(this.quadrant)){
+                //     this.ctx.moveTo(125, 500);
+                //     this.ctx.lineTo(250, 250);
+                //     this.ctx.lineTo(375, 500);   
+                // } else if (this.quadrant === 3) {
+                //     this.ctx.moveTo(250, 500);
+                //     this.ctx.lineTo(500, 0);
+                // } else if (this.quadrant === 4) {
+                //     this.ctx.moveTo(0, 0);
+                //     this.ctx.lineTo(250, 500);
+                // }
+                // this.ctx.stroke();
 
                 // // two diagonal lines (for freeway)
                 // let lines = [

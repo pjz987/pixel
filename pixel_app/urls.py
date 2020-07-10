@@ -14,4 +14,5 @@ urlpatterns = [
     path('get-palettes/', views.get_palettes, name='get_palettes'),
     path('draw/', views.draw, name='draw'),
     path('lospec-palettes/', views.lospec_palettes, name='lospec_palettes'),
+    path('save-lospec-palette/<int:pk>/', views.save_lospec_palette, name='save_lospec_palette'),
 ]

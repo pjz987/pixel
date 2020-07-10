@@ -2,8 +2,19 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'pixel_app/css/lospec-palettes.css' %}">
 </head>
+
+<div>
+    {% if palettes.has_previous %}
+        <a href="?page={{palettes.previous_page_number}}">&lt;</a>
+    {% endif %}
+    <span>{{ palettes.number }}</span>
+    {% if palettes.has_next %}
+        <a href="?page={{palettes.next_page_number}}">&gt;</a>
+    {% endif %}
+</div>
+
 {% for palette in palettes %}
-<h3>{{ palette.title }} {% if palette.creator %} by {{ palette.creator }} {% endif %}</h3>
+<h3>{{ palette.title }} {% if palette.creator %} by {{ palette.creator }} {% endif %}<a href="{% url 'pixel_app:save_lospec_palette' palette.pk %}"><button>Save to Palettes</button></a></h3>
 <p>{{ palette.description|safe }}</p>
 <div id="palette">
     {% for color in palette.colors.all %}

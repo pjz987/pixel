@@ -129,6 +129,11 @@ def lospec_palettes(request):
     }
     return render(request, 'pixel_app/lospec-palettes.html', context)
 
-# def choose_lospec_palette(request, id):
-#     palette = LospecPalette.objects.get(pk=pk)
-#     context = {'palette': palette}
+def save_lospec_palette(request, pk):
+    lospec_palette = LospecPalette.objects.get(pk=pk)
+    palette = Palette(name=f'{lospec_palette.title} {lospec_palette.creator}')
+    palette.save()
+    for lospec_color in lospec_palette.colors.all():
+        color = Color(name=lospec_color.color, palette=palette)
+        color.save()
+    return HttpResponseRedirect(reverse('pixel_app:draw'))
