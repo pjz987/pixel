@@ -18,4 +18,4 @@
 ![Mountain Landscape](media/art/Mountain_Landscape.png)
 
 ### Moon
-![Moon](media/art/Mountain_2.png)
+![Moon](media/art/Moon_2.png)
