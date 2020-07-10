@@ -50,5 +50,12 @@ class Art(models.Model):
         print(self.image.url)
         return self.image.url
 
-class LospecPalette(models.Model)
-    
+class LospecPalette(models.Model):
+    _id = models.CharField(max_length=24)
+    creator = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+
+class LospecColor(models.Model):
+    color = models.CharField(max_length=7)
+    palette = models.ForeignKey(LospecPalette, on_delete=models.PROTECT, related_name='colors')
