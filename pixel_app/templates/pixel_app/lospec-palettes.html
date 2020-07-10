@@ -1,0 +1,23 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'pixel_app/css/lospec-palettes.css' %}">
+</head>
+{% for palette in palettes %}
+<h3>{{ palette.title }} {% if palette.creator %} by {{ palette.creator }} {% endif %}</h3>
+<p>{{ palette.description|safe }}</p>
+<div id="palette">
+    {% for color in palette.colors.all %}
+    <div style="background-color: {{ color.color }}"></div>
+    {% endfor %}
+</div>
+{% endfor %}
+
+<div>
+    {% if palettes.has_previous %}
+        <a href="?page={{palettes.previous_page_number}}">&lt;</a>
+    {% endif %}
+    <span>{{ palettes.number }}</span>
+    {% if palettes.has_next %}
+        <a href="?page={{palettes.next_page_number}}">&gt;</a>
+    {% endif %}
+</div>

@@ -1,0 +1,19 @@
+#palette > div {
+    height: 100px;
+    width: 100px;
+    margin: 5px;
+}
+
+#palette {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+body {
+    background: #332f35;
+    color: #e5e3e6;
+}
+
+a {
+    color: #e5e5e5;
+}

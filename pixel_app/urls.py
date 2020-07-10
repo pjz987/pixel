@@ -13,4 +13,5 @@ urlpatterns = [
     path('edit/<int:pk>/', views.edit, name='edit'),
     path('get-palettes/', views.get_palettes, name='get_palettes'),
     path('draw/', views.draw, name='draw'),
+    path('lospec-palettes/', views.lospec_palettes, name='lospec_palettes'),
 ]

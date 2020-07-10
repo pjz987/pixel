@@ -3,8 +3,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.paginator import Paginator
 
-from .models import Color, Palette, Art
+from .models import Color, Palette, Art, LospecPalette, LospecColor
 
 from io import StringIO, BytesIO
 import json
@@ -116,3 +117,18 @@ def get_palettes(request):
 def draw(request):
     context = {'get_palettes': {'url': reverse('pixel_app:get_palettes')}}
     return render(request, 'pixel_app/draw2.html', context)
+
+def lospec_palettes(request):
+    page = request.GET.get('page', 1)
+
+    palettes = LospecPalette.objects.all()
+    paginator = Paginator(palettes, 10)
+    palettes = paginator.page(page)
+    context = {
+        'palettes': palettes,
+    }
+    return render(request, 'pixel_app/lospec-palettes.html', context)
+
+# def choose_lospec_palette(request, id):
+#     palette = LospecPalette.objects.get(pk=pk)
+#     context = {'palette': palette}
