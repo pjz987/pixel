@@ -172,6 +172,28 @@ var app = new Vue({
             this.stroke();
         },
 
+        drawCircle: function(x, y, r, q) {
+            this.ctx.beginPath();
+            if (q) {
+                r *= 2;
+                if (q === 1) {
+                    x = (x - 250) * 2
+                    y *= 2;
+                } else if (q === 2) {
+                    x *= 2;
+                    y *= 2;
+                } else if (q === 3) {
+                    x *= 2;
+                    y = (y - 250) * 2
+                } else if (q === 4) {
+                    x = (x - 250) * 2
+                    y = (y - 250) * 2
+                }
+            }
+            this.ctx.arc(x, y, r, 0, 2*Math.PI);
+            this.ctx.stroke();
+        },
+
         stroke: function () {
             // this.ctx.clearRect(0, 0, this.w, this.h)
             if (this.grid) {
@@ -182,7 +204,8 @@ var app = new Vue({
                 };
                 // this.ctx.strokeStyle = 'white';
                 // this.ctx.strokeStyle = 'orange';
-                this.ctx.strokeStyle = '#ed2939'
+                // this.ctx.strokeStyle = '#ed2939'
+                this.ctx.strokeStyle = 'blue';
 
                 this.ctx.lineWidth = 0.5;
 
@@ -198,6 +221,10 @@ var app = new Vue({
                     this.ctx.lineTo(this.w, y);
                     this.ctx.stroke();
                 };
+
+                this.drawCircle(275, 225, 75, this.quadrant);
+                this.drawCircle(275, 225, 125, this.quadrant);
+                this.drawCircle(275, 225, 175, this.quadrant);
 
                 // // vanishing point
                 // this.ctx.beginPath();
