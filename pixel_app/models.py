@@ -56,6 +56,12 @@ class LospecPalette(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
 
+    def __str__(self):
+        return f"{self.title} by {self.creator}"
+
 class LospecColor(models.Model):
     color = models.CharField(max_length=7)
     palette = models.ForeignKey(LospecPalette, on_delete=models.PROTECT, related_name='colors')
+
+    def __str__(self):
+        return self.color

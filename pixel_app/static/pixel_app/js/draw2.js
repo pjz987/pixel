@@ -172,7 +172,7 @@ var app = new Vue({
             this.stroke();
         },
 
-        drawCircle: function(x, y, r, q) {
+        drawCircle: function(x, y, r, q, startAngle=0, endAngle=2*Math.PI) {
             this.ctx.beginPath();
             if (q) {
                 r *= 2;
@@ -190,7 +190,37 @@ var app = new Vue({
                     y = (y - 250) * 2
                 }
             }
-            this.ctx.arc(x, y, r, 0, 2*Math.PI);
+            this.ctx.arc(x, y, r, startAngle, endAngle);
+            this.ctx.stroke();
+        },
+
+        drawLine: function(x1, y1, x2, y2, q) {
+            this.ctx.beginPath();
+            if (q) {
+                if (q === 1) {
+                    x1 = (x1 - 250) * 2
+                    y1 *= 2;
+                    x2 = (x2 - 250) * 2
+                    y2 *= 2;
+                } else if (q === 2) {
+                    x1 *= 2;
+                    y1 *= 2;
+                    x2 *= 2;
+                    y2 *= 2;
+                } else if (q === 3) {
+                    x1 *= 2;
+                    y1 = (y1 - 250) * 2
+                    x2 *= 2;
+                    y2 = (y2 - 250) * 2
+                } else if (q === 4) {
+                    x1 = (x1 - 250) * 2
+                    y1 = (y1 - 250) * 2
+                    x2 = (x2- 250) * 2
+                    y2 = (y2 - 250) * 2
+                }
+            }
+            this.ctx.moveTo(x1, y1);
+            this.ctx.lineTo(x2, y2);
             this.ctx.stroke();
         },
 
@@ -205,7 +235,8 @@ var app = new Vue({
                 // this.ctx.strokeStyle = 'white';
                 // this.ctx.strokeStyle = 'orange';
                 // this.ctx.strokeStyle = '#ed2939'
-                this.ctx.strokeStyle = 'blue';
+                // this.ctx.strokeStyle = 'blue';
+                // this.ctx.strokeStyle = 'greenyellow'
 
                 this.ctx.lineWidth = 0.5;
 
@@ -221,10 +252,26 @@ var app = new Vue({
                     this.ctx.lineTo(this.w, y);
                     this.ctx.stroke();
                 };
+                this.drawCircle(250, 250, 250, this.quadrant, 0, 2*Math.PI)
 
-                this.drawCircle(275, 225, 75, this.quadrant);
-                this.drawCircle(275, 225, 125, this.quadrant);
-                this.drawCircle(275, 225, 175, this.quadrant);
+                // this.drawCircle(135, 150, 115, this.quadrant, Math.PI, 2*Math.PI);
+                // this.drawCircle(365, 150, 115, this.quadrant, Math.PI, 2*Math.PI);
+
+                // this.drawCircle(135, 150, 85, this.quadrant, Math.PI, 1.5*Math.PI);
+                // this.drawCircle(365, 150, 85, this.quadrant, Math.PI, 1.5*Math.PI);
+
+                // this.drawCircle(135, 150, 60, this.quadrant, Math.PI, 1.5*Math.PI);
+                // this.drawCircle(365, 150, 60, this.quadrant, Math.PI, 1.5*Math.PI);
+
+                // this.drawLine(20, 150, 250, 465, this.quadrant);
+                // this.drawLine(480, 150, 250, 465, this.quadrant);
+
+                // this.drawCircle(275, 225, 75, this.quadrant);
+                // this.drawCircle(275, 225, 125, this.quadrant);
+                // this.drawCircle(275, 225, 175, this.quadrant);
+
+                // this.drawLine(0, 0, 500, 500, this.quadrant);
+                // this.drawLine(50, 150, 250, 300, this.quadrant);
 
                 // // vanishing point
                 // this.ctx.beginPath();
